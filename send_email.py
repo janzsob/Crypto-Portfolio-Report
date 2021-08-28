@@ -8,14 +8,14 @@ def send_email():
     email_password = os.environ.get("EMAIL_PASS")
 
     msg = EmailMessage()
-    msg['Subject'] = "Test email wit excel."
+    msg['Subject'] = "Test email wit pdf"
     msg['From'] = email_address
     msg['To'] = [email_address]
 
-    msg.set_content("Hello, test email with excel file attachment.")
+    msg.set_content("Hello, test email with pdf file attachment.")
 
 
-    with open("portfolio.xlsx", 'rb') as f:
+    with open("report.pdf", 'rb') as f:
         file_data = f.read()
         file_name = f.name
 
@@ -24,3 +24,5 @@ def send_email():
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(email_address, email_password)
         smtp.send_message(msg)
+
+send_email()
