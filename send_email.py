@@ -25,4 +25,4 @@ def send_email():
         smtp.login(email_address, email_password)
         smtp.send_message(msg)
 
-send_email()
+#send_email()

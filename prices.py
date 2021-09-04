@@ -1,15 +1,15 @@
 from pycoingecko import CoinGeckoAPI
-from datetime import datetime, date
+from datetime import date
 from openpyxl import Workbook, load_workbook
 from openpyxl.worksheet.table import Table
+
 
 def creating_file():
     # Using Coingecki API
     cg = CoinGeckoAPI()
     data = cg.get_price(ids='ethereum, binancecoin, cardano, ripple, vechain, 1inch', vs_currencies='usd')
 
-    now = datetime.now()
-    today = now.strftime("%Y/%m/%d") 
+    today = date.today() 
 
     # workbook
     wb = Workbook()
@@ -40,6 +40,7 @@ def creating_file():
 
     ws.add_table(table)
     wb.save("portfolio.xlsx")
+
 
 """ Collecting historical data and append it in a file"""
 def gather_historic_data(date_request):
@@ -94,17 +95,16 @@ def append_data():
     wb = load_workbook("portfolio.xlsx")
     ws = wb.worksheets[0]
 
-    now = datetime.now()
-    today = now.strftime("%Y/%m/%d") 
-
+    today = date.today() 
 
     ws.append([
-        today, data['ethereum']['usd'], 
-        data['binancecoin']['usd'], 
-        data['cardano']['usd'], 
-        data['ripple']['usd'], 
-        data['vechain']['usd'], 
-        data['1inch']['usd']
+        today, 
+        round(data['ethereum']['usd'], 0), 
+        round(data['binancecoin']['usd'], 0), 
+        round(data['cardano']['usd'], 2), 
+        round(data['ripple']['usd'], 2), 
+        round(data['vechain']['usd'], 4), 
+        round(data['1inch']['usd'], 2)
         ])
 
     for table in ws.tables.values():
@@ -113,8 +113,9 @@ def append_data():
         #print(table.name)
         #print(table.ref)
 
-
     wb.save("portfolio.xlsx")
 
 
 #gather_historic_data('22-08-2021')
+
+#append_data()
