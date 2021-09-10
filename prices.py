@@ -186,7 +186,7 @@ def append_data():
 
 
 #gather_historic_data('05-09-2021')
-get_historic_value('05-09-2021')
+#get_historic_value('05-09-2021')
 
 #append_data()
 
