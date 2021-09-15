@@ -17,7 +17,7 @@ def create_chart():
     # It rotates and formats dates on x axis
     plt.gcf().autofmt_xdate()
 
-    plt.title("Portfolió Értékének Alakulása")
+    #plt.title("Portfolió Értékének Alakulása")
     plt.ylabel("Portfolió Értéke (USD)")
 
     # Adjusts the padding

@@ -185,8 +185,8 @@ def append_data():
     wb.save("portfolio.xlsx")
 
 
-#gather_historic_data('05-09-2021')
-#get_historic_value('05-09-2021')
+#gather_historic_data('12-09-2021')
+#get_historic_value('12-09-2021')
 
 #append_data()
 
