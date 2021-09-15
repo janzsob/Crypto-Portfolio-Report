@@ -1,18 +1,22 @@
 import os
 import smtplib
 from email.message import EmailMessage
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 def send_email():
     email_address = os.environ.get("EMAIL")
     email_password = os.environ.get("EMAIL_PASS")
 
     msg = EmailMessage()
-    msg['Subject'] = "Test email wit pdf"
+    msg['Subject'] = "Heti crypto riport"
     msg['From'] = email_address
-    msg['To'] = [email_address]
+    msg['To'] = [os.getenv('recipients')]
+    msg['Cc'] = [email_address]
 
-    msg.set_content("Hello, test email with pdf file attachment.")
+    msg.set_content("Szia, \nKüldöm a heti jelentést a portfóliónkról.\nBence")
 
 
     with open("report.pdf", 'rb') as f:

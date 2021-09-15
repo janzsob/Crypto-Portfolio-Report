@@ -18,7 +18,7 @@ def generating_pdf():
     # loading dataframe
     df = pd.read_excel('portfolio.xlsx')
 
-    TABLE_COL_NAMES = list(df.columns) 
+    TABLE_COL_NAMES = list(df.columns)
     TABLE_DATA = []
     for index, rows in df.iterrows():
         row_list = [pd.Timestamp(rows['Dátum']).strftime("%Y/%m/%d") , f"${str(rows.Ethereum)}", f"${str(rows.BNB)}", f"${str(rows.Cardano)}", f"${str(rows.XRP)}", f"${str(rows['1inch'])}"]
@@ -31,22 +31,25 @@ def generating_pdf():
     pdf.add_page()
     pdf.set_font("Times", size=14)
     line_height = pdf.font_size * 2
-    
+
 
     """ Page1: portfolio composition """
     # portfolio value and invested amount
     pdf.set_margins(left=50, top=10, right=50)
 
+    # current portfolio value
     df = pd.read_excel('portfolio.xlsx', "Érték")
-    current_value = f"${str(df.iloc[-1,1])}" # extract portfolio value from the last row.    
-    invested_amount = round(df.iloc[0, 2])
+    current_value = f"${str(df.iloc[-1,1])}" # extract portfolio value from the last row.
+    # invested amount
+    df = pd.read_excel('portfolio.xlsx', "Befektetés")
+    invested_amount = round(df.at[0, 'Befektetett összeg (USD)'])
 
     # building table
     pdf.set_font('helvetica', 'B', 14)
     col_width = pdf.epw / 2
     pdf.cell(col_width, line_height, "Befektetett összeg", border=0, align="C")
-    pdf.cell(col_width, line_height, "Portfolió értéke", border=0, ln=1, align="C")
-    
+    pdf.cell(col_width, line_height, "Portfólió értéke", border=0, ln=1, align="C")
+
     pdf.set_font("Times", style="B", size=14)
     pdf.set_fill_color(252, 3, 3)  # background color
     pdf.cell(col_width, line_height, f"${invested_amount}", border=1, align="C", fill=True)
@@ -60,7 +63,7 @@ def generating_pdf():
     col_table_names = ["Valuták", "Mennyiség (db)"]
     pdf.set_font('helvetica', 'B', 14)
     col_width = pdf.epw / 2
-    pdf.cell(pdf.epw, line_height, "Portfolió összetétele", border=0, ln=1, align="C")
+    pdf.cell(pdf.epw, line_height, "Portfólió összetétele", border=0, ln=1, align="C")
     for title in col_table_names:
         pdf.set_font('helvetica', 'B', 13)
         pdf.cell(col_width, line_height, title, border=1, align="C")
@@ -82,12 +85,12 @@ def generating_pdf():
             pdf.set_font("Times", size=13)
             pdf.cell(col_width, line_height, item, border=1, align="C")
         pdf.ln(line_height)
-    
+
     pdf.ln(8) # break
 
     # Insert a chart about changes in portfolio value
     pdf.set_font('helvetica', 'B', 14)
-    pdf.cell(0, line_height, "Portfolió értékének alakulása", ln=1, align="C")
+    pdf.cell(0, line_height, "Portfólió értékének alakulása", ln=1, align="C")
     pdf.set_margins(left=10, top=10, right=10) # default marging dimensions
     pdf.ln()
     pdf.image("chart.png", x=5, y=135, w=210-10)
@@ -106,7 +109,7 @@ def generating_pdf():
     for col_name in TABLE_COL_NAMES:
         if col_name == "Dátum":
             pdf.cell(col_width, line_height, '', border=1, align="C")
-        else:    
+        else:
             pdf.cell(col_width, line_height, col_name, border=1, align="C")
     pdf.ln(line_height)
     pdf.set_font(style="")  # disabling bold text
@@ -117,8 +120,12 @@ def generating_pdf():
             pdf.set_font("Times", size=14)
             pdf.cell(col_width, line_height, datum, border=1, align="C")
         pdf.ln(line_height)
-    
+
     # save pdf
     pdf.output("report.pdf")
 
-generating_pdf()
+#generating_pdf()
+
+# df = pd.read_excel('portfolio.xlsx', "Befektetés")
+# invested_amount = round(df.at[0, 'Befektetett összeg (USD)'])
+# print(invested_amount)

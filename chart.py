@@ -18,7 +18,7 @@ def create_chart():
     plt.gcf().autofmt_xdate()
 
     #plt.title("Portfolió Értékének Alakulása")
-    plt.ylabel("Portfolió Értéke (USD)")
+    plt.ylabel("Portfólió Értéke (USD)")
 
     # Adjusts the padding
     plt.tight_layout()
