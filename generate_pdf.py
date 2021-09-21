@@ -3,6 +3,16 @@ from fpdf import FPDF
 from datetime import date
 
 def generating_pdf():
+    # loading dataframe
+    df = pd.read_excel('portfolio.xlsx')
+
+    TABLE_COL_NAMES = list(df.columns)
+    TABLE_DATA = []
+    for index, rows in df.iterrows():
+        row_list = [pd.Timestamp(rows['Dátum']).strftime("%Y/%m/%d") , f"${str(rows.Ethereum)}", f"${str(rows.BNB)}", f"${str(rows.Cardano)}", f"${str(rows.XRP)}", f"${str(rows['1inch'])}"]
+        TABLE_DATA.append(row_list)
+
+    # creating pdf
     class PDF(FPDF):
         def header(self):
             self.set_font('helvetica', '', 14)
@@ -14,17 +24,7 @@ def generating_pdf():
             self.cell(0, 5, today, border=0, align='R')
             # Line break
             self.ln(15)
-
-    # loading dataframe
-    df = pd.read_excel('portfolio.xlsx')
-
-    TABLE_COL_NAMES = list(df.columns)
-    TABLE_DATA = []
-    for index, rows in df.iterrows():
-        row_list = [pd.Timestamp(rows['Dátum']).strftime("%Y/%m/%d") , f"${str(rows.Ethereum)}", f"${str(rows.BNB)}", f"${str(rows.Cardano)}", f"${str(rows.XRP)}", f"${str(rows['1inch'])}"]
-        TABLE_DATA.append(row_list)
-
-    # creating pdf
+            
     pdf = PDF()
     # default format for FPDF is A4
     # dimensions of A4: widt=210mm height=297mm

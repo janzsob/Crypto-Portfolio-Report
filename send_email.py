@@ -11,12 +11,12 @@ def send_email():
     email_password = os.environ.get("EMAIL_PASS")
 
     msg = EmailMessage()
-    msg['Subject'] = "Heti crypto riport"
+    msg['Subject'] = os.getenv('SUBJECT')
     msg['From'] = email_address
-    msg['To'] = [os.getenv('recipients')]
+    msg['To'] = [os.getenv('RECIPIENTS')]
     msg['Cc'] = [email_address]
 
-    msg.set_content("Szia, \nKüldöm a heti jelentést a portfóliónkról.\nBence")
+    msg.set_content(os.getenv('MESSAGE'))
 
 
     with open("report.pdf", 'rb') as f:
