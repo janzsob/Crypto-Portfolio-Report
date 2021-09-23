@@ -60,9 +60,10 @@ def generating_pdf():
 
     # table about portfolio composition
     # header
-    col_table_names = ["Valuták", "Mennyiség (db)"]
+    pdf.set_margins(left=15, top=10, right=15)
+    col_table_names = ["Valuták", "Mennyiség (db)", "Átlagár"]
     pdf.set_font('helvetica', 'B', 14)
-    col_width = pdf.epw / 2
+    col_width = pdf.epw / 3
     pdf.cell(pdf.epw, line_height, "Portfólió összetétele", border=0, ln=1, align="C")
     for title in col_table_names:
         pdf.set_font('helvetica', 'B', 13)
@@ -76,7 +77,7 @@ def generating_pdf():
     df = pd.read_excel('portfolio.xlsx', "Mennyiség")
     pdf.set_font("Times", style="B", size=14)
     for index, rows in df.iterrows():
-        row_list = [rows[0], str(rows[1])]
+        row_list = [rows[0], str(rows[1]), f"${str(rows[2])}"]
         table_content.append(row_list)
 
     # create table body
